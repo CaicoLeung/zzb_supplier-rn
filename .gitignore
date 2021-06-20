@@ -11,3 +11,10 @@ web-build/
 
 # macOS
 .DS_Store
+
+# vscode
+.history
+.vscode
+
+# Idea
+.idea
