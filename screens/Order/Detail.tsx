@@ -1,11 +1,16 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
+import { Button, Provider, Toast, WingBlank } from '@ant-design/react-native';
 
 export default function OrderDetail() {
   return (
-    <ScrollView style={styles.container}>
-      <Text>详情页</Text>
-    </ScrollView>
+    <Provider>
+      <ScrollView style={styles.container}>
+        <WingBlank>
+          <Button type="primary" onPress={() => Toast.info("hello!")}>ant button</Button>
+        </WingBlank>
+      </ScrollView>
+    </Provider>
   )
 }
 
