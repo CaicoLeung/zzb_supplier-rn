@@ -17,6 +17,8 @@ export default function useCachedResources() {
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
         });
+        await Font.loadAsync('antoutline', require('@ant-design/icons-react-native/fonts/antoutline.ttf'))
+        await Font.loadAsync('antfill', require('@ant-design/icons-react-native/fonts/antfill.ttf'));
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
