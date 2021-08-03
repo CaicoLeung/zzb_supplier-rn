@@ -5,9 +5,8 @@
 
 export type RootStackParamList = {
   Root: undefined
-  Order: {
-    screen: 'Detail' | 'List'
-  }
+  OrderList: undefined
+  OrderDetail: undefined
   NotFound: undefined
 }
 
