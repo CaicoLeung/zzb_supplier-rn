@@ -1,144 +1,74 @@
 import { datasource } from "@/data/list"
 import * as React from "react"
-import {
-  StyleSheet,
-  Button,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from "react-native"
+import { StyleSheet, Image, ScrollView, TouchableOpacity, FlatList, ImageBackground } from "react-native"
+import { Button } from "@ant-design/react-native"
 import { TextInput } from "react-native-gesture-handler"
-
-import EditScreenInfo from "@/components/EditScreenInfo"
-import { Text, View } from "@/components/Themed"
 import { RootStackParamList } from "types"
 import { StackNavigationProp } from "@react-navigation/stack"
+import styled from "styled-components/native"
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Root'
->;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Root">
 
 type Props = {
-  navigation: ProfileScreenNavigationProp;
-};
-
-export default function TabOneScreen({ navigation }: Props) {
-  const [text, setText] = React.useState("")
-
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.iconContainer}>
-        <TouchableOpacity>
-          <Image
-            style={styles.icon}
-            source={require("../assets/images/icons/home_icon_1.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            style={styles.icon}
-            source={{ uri: "https://www.reactnative.express/static/logo.png" }}
-            defaultSource={require("../assets/images/icons/home_icon_1.png")}
-          />
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={datasource}
-        horizontal
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.smallCard}>
-            <Text style={styles.smallCardText}>{item.title}</Text>
-          </View>
-        )}
-      />
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="/screens/TabHome.tsx" />
-      <View style={styles.inputContainer}>
-        <View style={styles.textInput}>
-          <TextInput
-            value={text}
-            placeholder="请输入..."
-            onChangeText={setText}
-          />
-        </View>
-        <View style={styles.inputButton}>
-          <Button title="重置" onPress={() => setText("")} />
-        </View>
-      </View>
-      <View style={styles.navigationButton}>
-        <Button title="跳转至详情页" onPress={() => navigation.navigate("Order", { screen: "Detail" })} />
-      </View>
-    </ScrollView>
-  )
+  navigation: ProfileScreenNavigationProp
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  iconContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  icon: {
-    width: 50,
-    height: 50,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  smallCard: {
-    width: 200,
-    height: 200,
-    backgroundColor: "#40a9ff",
-    borderRadius: 5,
-    marginRight: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  smallCardText: {
-    fontSize: 24,
-    color: "#FFFFFF",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  inputContainer: {
-    flex: 1,
-    height: 34,
-    flexDirection: "row",
-    alignItems: "stretch",
-  },
-  textInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    justifyContent: "center",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#ccc",
-  },
-  inputButton: {
-    fontSize: 15,
-    backgroundColor: "blue",
-    color: "#FFFFFF",
-  },
-  navigationButton: {
-    marginTop: 10,
-    fontSize: 15,
-    backgroundColor: "yellow",
-    color: "#FFFFFF",
-    borderRadius: 4
-  }
-})
+const ScrollViewContainer = styled.ScrollView`
+  flex: 1;
+`
+const HeaderView = styled.View`
+  flex: 1;
+`
+const ImageBackgroundBox = styled.ImageBackground`
+  padding-top: 80;
+  padding-bottom: 20;
+`
+const ImageBackgroundInner = styled.View`
+  flex: 1;
+  height: 70;
+  padding-left: 20;
+  padding-right: 20;
+  align-items: center;
+  flex-direction: row;
+`
+const AvatarBox = styled.Image`
+  width: 60;
+  height: 60;
+  border-radius: 30;
+  margin-right: 10;
+`
+const AccountInfoBox = styled.View`
+  flex: 1;
+  align-content: center;
+  background-color: transparent;
+  color: #ffffff;
+`
+const BaseText = styled.Text`
+  color: #ffffff;
+  font-size: 14;
+  font-weight: 300;
+`
+const TitleText = styled(BaseText)`
+  font-size: 20;
+  margin-bottom: 8;
+  font-weight: 600;
+`
+
+export default function TabOneScreen({ navigation }: Props) {
+  return (
+    <ScrollViewContainer>
+      <HeaderView>
+        <ImageBackgroundBox resizeMode="cover" source={require("zzb-sup/assets/images/cover.png")}>
+          <ImageBackgroundInner>
+            <AvatarBox width={60} height={60} resizeMode="cover" source={require("zzb-sup/assets/images/pika.jpeg")} />
+            <AccountInfoBox>
+              <TitleText>余额宝文化</TitleText>
+              <BaseText>账号: 666666</BaseText>
+            </AccountInfoBox>
+            <Button size="small">退出登录</Button>
+          </ImageBackgroundInner>
+        </ImageBackgroundBox>
+      </HeaderView>
+    </ScrollViewContainer>
+  )
+}
