@@ -9,14 +9,21 @@ module.exports = function (api) {
         {
           root: "./",
           alias: {
+            "@/": "./",
             "@/data": "./data",
             "@/screens": "./screens",
             "@/components": "./components",
             "@/images": "./assets/images",
+            "@/types": "./types",
           },
         },
       ],
-      ["import", { libraryName: "@ant-design/react-native" }],
+      [
+        "import",
+        {
+          libraryName: "@ant-design/react-native"
+        }
+      ],
     ],
   }
 }

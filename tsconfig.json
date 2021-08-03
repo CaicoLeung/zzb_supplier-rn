@@ -4,10 +4,12 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
+      "@/*": ["./*"],
       "@/data/*": ["data/*"],
       "@/screens/*": ["screens/*"],
       "@/components/*": ["components/*"],
       "@/images/*": ["assets/images/*"],
+      "@/types/*": ["types/*"]
     }
   },
 }
