@@ -4,6 +4,7 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
+      "zzb-sup/*": ["./*"],
       "@/*": ["./*"],
       "@/data/*": ["data/*"],
       "@/screens/*": ["screens/*"],
