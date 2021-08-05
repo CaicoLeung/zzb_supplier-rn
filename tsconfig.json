@@ -4,13 +4,13 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "zzb-sup/*": ["./*"],
       "@/*": ["./*"],
       "@/data/*": ["data/*"],
       "@/screens/*": ["screens/*"],
       "@/components/*": ["components/*"],
       "@/images/*": ["assets/images/*"],
-      "@/types/*": ["types/*"]
+      "@/types/*": ["types/*"],
+      "zzb-sup/*": ["./*"],
     }
   },
 }
