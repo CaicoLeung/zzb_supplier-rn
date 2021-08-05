@@ -1,11 +1,12 @@
 import { datasource } from "@/data/list"
 import * as React from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground } from "react-native"
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground, Pressable, TouchableHighlight } from "react-native"
 import { Button, Card, Icon } from "@ant-design/react-native"
 import { TextInput } from "react-native-gesture-handler"
 import { RootStackParamList } from "types"
 import { StackNavigationProp } from "@react-navigation/stack"
 import styled from "styled-components/native"
+import { SupGoodsTabs } from "@/helpers/goods"
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Root">
 
@@ -59,10 +60,12 @@ export default function TabOneScreen({ navigation }: Props) {
     {
       title: "13",
       name: "售卖中",
+      params: SupGoodsTabs.售卖中,
     },
     {
       title: "23",
       name: "已下架",
+      params: SupGoodsTabs.已下架,
     },
     {
       title: "＋",
@@ -97,28 +100,36 @@ export default function TabOneScreen({ navigation }: Props) {
           </ImageBackgroundInner>
         </ImageBackgroundBox>
       </HeaderView>
-      <Card style={styles.card}>
-        <Card.Header style={styles.cardHeader} title="商品管理" extra={<Icon style={{ textAlign: "right" }} name="right" size="sm" />} />
-        <Card.Body style={{ flexDirection: "row" }}>
-          {GoodsNav.map((nav, index) => (
-            <View style={[styles.cardBodyItem, { borderRightWidth: index === GoodsNav.length - 1 ? 0 : 0.4 }]} key={nav.name}>
-              <Text style={[styles.textCenter, { fontSize: 20 }]}>{nav.title}</Text>
-              <Text style={[styles.textCenter, { marginTop: 8 }]}>{nav.name}</Text>
-            </View>
-          ))}
-        </Card.Body>
-      </Card>
-      <Card style={[styles.card, { marginTop: 10 }]}>
-        <Card.Header style={styles.cardHeader} title="订单管理" extra={<Icon style={{ textAlign: "right" }} name="right" size="sm" />} />
-        <Card.Body style={{ flexDirection: "row" }}>
-          {OrderNav.map((nav, index) => (
-            <View style={[styles.cardBodyItem, { borderRightWidth: index === OrderNav.length - 1 ? 0 : 0.4 }]} key={nav.name}>
-              <Text style={[styles.textCenter, { fontSize: 20 }]}>{nav.title}</Text>
-              <Text style={[styles.textCenter, { marginTop: 8 }]}>{nav.name}</Text>
-            </View>
-          ))}
-        </Card.Body>
-      </Card>
+      <TouchableHighlight style={styles.card} onPress={() => navigation.navigate("GoodsList", { tab: SupGoodsTabs.售卖中 })}>
+        <Card>
+          <Card.Header style={styles.cardHeader} title="商品管理" extra={<Icon style={{ textAlign: "right" }} name="right" size="sm" />} />
+          <Card.Body style={{ flexDirection: "row" }}>
+            {GoodsNav.map((nav, index) => (
+              <TouchableOpacity
+                style={[styles.cardBodyItem, { borderRightWidth: index === GoodsNav.length - 1 ? 0 : 0.4 }]}
+                key={nav.name}
+                onPress={() => navigation.navigate("GoodsList", { tab: nav.params })}
+              >
+                <Text style={[styles.textCenter, { fontSize: 20 }]}>{nav.title}</Text>
+                <Text style={[styles.textCenter, { marginTop: 8 }]}>{nav.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </Card.Body>
+        </Card>
+      </TouchableHighlight>
+      <TouchableHighlight style={[styles.card, { marginTop: 10 }]} onPress={() => navigation.navigate("OrderList")}>
+        <Card>
+          <Card.Header style={styles.cardHeader} title="订单管理" extra={<Icon style={{ textAlign: "right" }} name="right" size="sm" />} />
+          <Card.Body style={{ flexDirection: "row" }}>
+            {OrderNav.map((nav, index) => (
+              <View style={[styles.cardBodyItem, { borderRightWidth: index === OrderNav.length - 1 ? 0 : 0.4 }]} key={nav.name}>
+                <Text style={[styles.textCenter, { fontSize: 20 }]}>{nav.title}</Text>
+                <Text style={[styles.textCenter, { marginTop: 8 }]}>{nav.name}</Text>
+              </View>
+            ))}
+          </Card.Body>
+        </Card>
+      </TouchableHighlight>
       <Card style={[styles.card, { marginTop: 10 }]}>
         <Card.Header style={styles.cardHeader} title="我的应用" />
         <Card.Body style={{ flexDirection: "row" }}>
