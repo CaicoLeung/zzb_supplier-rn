@@ -3,8 +3,10 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import OrderDetail from "@/screens/Order/Detail"
+import GoodsList from "@/screens/Goods/List"
+import GoodsDetail from "@/screens/Goods/Detail"
 import OrderList from "@/screens/Order/List"
+import OrderDetail from "@/screens/Order/Detail"
 import TabHome from "@/screens/TabHome"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
@@ -32,9 +34,11 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={TabHome} options={{ title: "工作台" }} />
-      <OrderStack.Screen name="OrderList" component={OrderList} options={{ title: "订单列表" }} />
+      <OrderStack.Screen name="OrderList" component={OrderList} options={{ title: "订单管理" }} />
       <OrderStack.Screen name="OrderDetail" component={OrderDetail} options={{ title: "订单详情" }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
+      <OrderStack.Screen name="GoodsList" component={GoodsList} options={{ title: "商品管理" }} />
+      <OrderStack.Screen name="GoodsDetail" component={GoodsDetail} options={{ title: "商品详情" }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "404" }} />
     </Stack.Navigator>
   )
 }

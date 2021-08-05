@@ -3,10 +3,16 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import type { SupGoodsTabs } from "./helpers/goods"
+
 export type RootStackParamList = {
   Root: undefined
   OrderList: undefined
   OrderDetail: undefined
+  GoodsList: {
+    tab?: SupGoodsTabs
+  }
+  GoodsDetail: undefined
   NotFound: undefined
 }
 
