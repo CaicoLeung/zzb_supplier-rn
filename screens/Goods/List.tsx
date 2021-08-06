@@ -12,7 +12,7 @@ import { getSupGoodsList } from "@/services/goods"
 import { createMaterialTopTabNavigator, MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs"
 import { useRequest } from "ahooks"
 import { useMemo } from "react"
-import { useNavigationState } from "@react-navigation/core"
+import { RouteProp, useNavigationState, useRoute } from "@react-navigation/core"
 
 interface ListViewProps {
   type: SupGoodsTabs
@@ -165,10 +165,10 @@ function ListView(props: ListViewProps, ref: React.ForwardedRef<ListViewRefType>
         data={datasource}
         renderItem={renderItem}
         numColumns={1}
-        getItemLayout={(data, index) => ({ length: 128, index, offset: 128 * index })}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.1}
         onEndReached={onEndReached}
+        ItemSeparatorComponent={() => <View style={{ flex: 1, height: 4, backgroundColor: "#f6f6f6" }} />}
         ListFooterComponent={listFooterComponentMap.get(canLoadNext)}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
@@ -197,6 +197,7 @@ export default function GoodsList({ navigation }: Props) {
   const removedListViewRef = React.useRef<ListViewRefType>(null)
   const [activeTab, setActiveTab] = React.useState<SupGoodsTabs>(SupGoodsTabs.售卖中)
   const [keyword, setKeyword] = React.useState("")
+  const route = useRoute<RouteProp<{ GoodsList: { tab: SupGoodsTabs } }, "GoodsList">>()
 
   const getInicatoeStyle = (width: number): StyleProp<ViewStyle> => {
     return {
@@ -225,7 +226,7 @@ export default function GoodsList({ navigation }: Props) {
         onSubmit={activeTab === SupGoodsTabs.售卖中 ? sellingListViewRef.current?.search : removedListViewRef.current?.search}
       />
       <Tabs.Navigator
-        initialRouteName={activeTab}
+        initialRouteName={route.params.tab}
         screenOptions={{
           tabBarActiveTintColor: "#1989fa",
           tabBarLabelStyle: { fontSize: 16, fontWeight: "600" },
