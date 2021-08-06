@@ -4,6 +4,12 @@ export enum SupGoodsTabs {
 }
 
 export enum ShelfSupGoodsStatus {
-  下架 = 0,
+  供应商下架 = 3,
+  平台下架 = 2,
+  上架 = 1
+}
+
+export enum ShelfSupGoodsTab {
+  下架 = 2,
   上架 = 1
 }
