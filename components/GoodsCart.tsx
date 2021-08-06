@@ -63,11 +63,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    marginHorizontal: 8,
+    paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
   },
   image: {
     width: 100,
