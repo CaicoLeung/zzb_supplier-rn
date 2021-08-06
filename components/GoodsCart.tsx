@@ -1,6 +1,5 @@
-import { Goods } from "@/types/goods"
 import * as React from "react"
-import { StyleSheet, Image, Text } from "react-native"
+import { StyleSheet, Image, Text, Pressable } from "react-native"
 import { View } from "./Themed"
 
 interface GoodsCartProps {
@@ -10,11 +9,12 @@ interface GoodsCartProps {
   tags: (string | React.ReactNode)[]
   price: number
   num: number | string
+  onPreview?: () => void
 }
 
 const renderPrice = (value: number) => {
   const integer = Math.trunc(value).toLocaleString()
-  const decimal = +(value % 1).toFixed(2) * 100
+  const decimal = `${+(value % 1).toFixed(2) * 100}`.padStart(2, "0")
   return (
     <>
       <Text style={{ fontSize: 22, fontWeight: "600" }}>{integer}.</Text>
@@ -25,26 +25,37 @@ const renderPrice = (value: number) => {
 
 export function GoodsCart(props: GoodsCartProps) {
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} width={100} height={100} resizeMode="cover" defaultSource={require("zzb-sup/assets/images/pika.jpeg")} source={{ uri: props.cover }} />
-      <View style={styles.content}>
-        <Text numberOfLines={2} style={styles.nameText}>
-          {props.name}
-        </Text>
-        <Text style={styles.descText}>{props.desc}</Text>
-        <View style={styles.tags}>
-          {props.tags?.map((tag, index) => (
-            <View key={index} style={styles.tagsItem}>
-              {typeof tag === "string" ? <Text style={styles.tagsItemText}>{tag}</Text> : tag}
-            </View>
-          ))}
-        </View>
-        <View style={[styles.spaceBetween, { alignItems: "flex-end" }]}>
-          <Text>¥{renderPrice(props.price)}</Text>
-          <Text>{props.num || 0}</Text>
+    <>
+      <View style={styles.container}>
+        <Pressable onPress={props.onPreview}>
+          <Image
+            style={styles.image}
+            width={100}
+            height={100}
+            resizeMode="cover"
+            defaultSource={require("zzb-sup/assets/images/goods-default.png")}
+            source={{ uri: props.cover }}
+          />
+        </Pressable>
+        <View style={styles.content}>
+          <Text numberOfLines={2} style={styles.nameText}>
+            {props.name}
+          </Text>
+          <Text style={styles.descText}>{props.desc}</Text>
+          <View style={styles.tags}>
+            {props.tags?.map((tag, index) => (
+              <View key={index} style={styles.tagsItem}>
+                {typeof tag === "string" ? <Text style={styles.tagsItemText}>{tag}</Text> : tag}
+              </View>
+            ))}
+          </View>
+          <View style={[styles.spaceBetween, { alignItems: "flex-end" }]}>
+            <Text>¥{renderPrice(props.price)}</Text>
+            <Text>{props.num || 0}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   )
 }
 
