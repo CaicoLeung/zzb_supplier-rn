@@ -1,4 +1,3 @@
-import { datasource } from "@/data/list"
 import * as React from "react"
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground, Pressable, TouchableHighlight } from "react-native"
 import { Button, Card, Icon } from "@ant-design/react-native"
@@ -7,6 +6,7 @@ import { RootStackParamList } from "types"
 import { StackNavigationProp } from "@react-navigation/stack"
 import styled from "styled-components/native"
 import { SupGoodsTabs } from "@/helpers/goods"
+import { useNavigation } from "@react-navigation/native"
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Root">
 
@@ -55,21 +55,23 @@ const TitleText = styled(BaseText)`
   font-weight: 600;
 `
 
-export default function TabOneScreen({ navigation }: Props) {
+export default function TabOneScreen() {
+  const navigation = useNavigation<ProfileScreenNavigationProp>()
   const GoodsNav = [
     {
       title: "13",
       name: "售卖中",
-      params: SupGoodsTabs.售卖中,
+      onPress: () => navigation.navigate("GoodsList", { tab: SupGoodsTabs.售卖中 }),
     },
     {
       title: "23",
       name: "已下架",
-      params: SupGoodsTabs.已下架,
+      onPress: () => navigation.navigate("GoodsList", { tab: SupGoodsTabs.已下架 }),
     },
     {
       title: "＋",
       name: "添加商品",
+      onPress: () => navigation.navigate("GoodsCreate"),
     },
   ]
   const OrderNav = [
@@ -105,11 +107,7 @@ export default function TabOneScreen({ navigation }: Props) {
           <Card.Header style={styles.cardHeader} title="商品管理" extra={<Icon style={{ textAlign: "right" }} name="right" size="sm" />} />
           <Card.Body style={{ flexDirection: "row" }}>
             {GoodsNav.map((nav, index) => (
-              <TouchableOpacity
-                style={[styles.cardBodyItem, { borderRightWidth: index === GoodsNav.length - 1 ? 0 : 0.4 }]}
-                key={nav.name}
-                onPress={() => navigation.navigate("GoodsList", { tab: nav.params })}
-              >
+              <TouchableOpacity style={[styles.cardBodyItem, { borderRightWidth: index === GoodsNav.length - 1 ? 0 : 0.4 }]} key={nav.name} onPress={nav.onPress}>
                 <Text style={[styles.textCenter, { fontSize: 20 }]}>{nav.title}</Text>
                 <Text style={[styles.textCenter, { marginTop: 8 }]}>{nav.name}</Text>
               </TouchableOpacity>

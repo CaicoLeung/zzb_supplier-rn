@@ -16,6 +16,7 @@ import { ColorSchemeName } from "react-native"
 import NotFoundScreen from "../screens/NotFoundScreen"
 import { RootStackParamList } from "../types"
 import LinkingConfiguration from "./LinkingConfiguration"
+import GoodsModify from "@/screens/Goods/Modify"
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,6 +37,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={TabHome} options={{ title: "工作台" }} />
       <OrderStack.Screen name="OrderList" component={OrderList} options={{ title: "订单管理" }} />
       <OrderStack.Screen name="OrderDetail" component={OrderDetail} options={{ title: "订单详情" }} />
+      <OrderStack.Screen name="GoodsCreate" component={GoodsModify} options={{ title: "添加商品" }} />
       <OrderStack.Screen name="GoodsList" component={GoodsList} options={{ title: "商品管理" }} />
       <OrderStack.Screen name="GoodsDetail" component={GoodsDetail} options={{ title: "商品详情" }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "404" }} />

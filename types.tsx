@@ -13,6 +13,7 @@ export type RootStackParamList = {
     tab?: SupGoodsTabs
   }
   GoodsDetail: undefined
+  GoodsCreate: undefined
   NotFound: undefined
 }
 
