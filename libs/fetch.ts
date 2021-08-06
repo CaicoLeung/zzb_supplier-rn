@@ -26,7 +26,7 @@ const codeMessage: Record<number, string> = {
   504: "网关超时。"
 };
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 axios.defaults.timeout = 5000;
 
 const http = axios.create({
@@ -43,10 +43,11 @@ const fileService = axios.create({
 
 const requestInterceptors = [
   (config: AxiosRequestConfig) => {
-    // const token = store.getters["userModule/accessToken"];
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = '29f3cf0060ad59f46dbebad75956ed80';
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    console.log(config);
     return config;
   },
   (error: unknown) => {
