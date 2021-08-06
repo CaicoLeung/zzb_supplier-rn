@@ -2,30 +2,27 @@ import { StrNum } from "./index";
 import { Pagination } from "./pagination";
 
 export declare namespace Order {
-  export interface SaleOrderPageParams extends Pagination.Params {
+  export interface SupOrderPageParams extends Pagination.Params {
     status?: number;
     key_word?: string;
   }
 
-  export interface SaleOrderPageResult extends Pagination.Result {
-    data: SaleOrder[];
+  export interface SupOrderPageResult extends Pagination.Result {
+    data: SupOrder[];
   }
 
-  export interface SaleOrder {
+  export interface SupOrder {
     order_list: OrderItem[];
-    goods_total_num: number;
     order_id: number;
-    order_no: string;
-    send_id: number;
     create_time_str: string;
+    goods_total_num: number;
     pay_amount: number;
     status: number;
     status_str: string;
-    package_num: number;
     express_text: string;
+    package_num: number;
+    send_id: number;
     close_status_str: string;
-    /* 支付剩余时间 */
-    pay_remaining_time: number;
   }
 
   export interface OrderItem {
@@ -33,7 +30,6 @@ export declare namespace Order {
     goods_name: string;
     goods_cate_str: string;
     goods_style: string;
-    goods_no: string;
     goods_price: number;
     goods_amount: number;
     cover: string;
@@ -61,7 +57,6 @@ export declare namespace Order {
     address: Addres;
     order_list: OrderItem[];
     express_info: string;
-    express_text: string;
     pay_type: number;
     pay_type_str: string;
     order_amount: number;
@@ -72,15 +67,12 @@ export declare namespace Order {
     id: number;
     finish_time: string;
     cancel_time: string;
-    send_id: number;
     send_time: string;
     top_text: string;
-    top_sub_text: string;
     express_text: string;
     package_num: number;
     status: number;
-    pay_remaining_time: number;
-    express_type: number;
+    send_id: number;
   }
 
   export interface OrderItem {
@@ -98,9 +90,6 @@ export declare namespace Order {
     status_str: string;
     goods_no: string;
     current_send_num?: number;
-    gold_price: number;
-    weight: number;
-    process: number;
   }
 
   export interface Addres {
@@ -174,10 +163,5 @@ export declare namespace Order {
   export interface ExpressCompanyItem {
     code: string;
     company: string;
-  }
-
-  export interface LevelConfig {
-    express_type: Record<string, string>;
-    pay_type: Record<number, string>;
   }
 }

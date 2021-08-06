@@ -50,6 +50,7 @@ export declare namespace Goods {
     user_id?: number;
     /* 类目ID */
     cate_id?: number;
+    tab: number;
   }
 
   export interface SupGoodsPageResult extends Pagination.Result {
@@ -76,7 +77,7 @@ export declare namespace Goods {
     update_time?: string;
     cover: string;
     opt_user_id?: StrNum;
-    images: T;
+    pictures: T;
   }
 
   export interface shelfGoodsParams {
