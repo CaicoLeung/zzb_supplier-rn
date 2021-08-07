@@ -71,7 +71,7 @@ export default function TabOneScreen() {
     {
       title: "＋",
       name: "添加商品",
-      onPress: () => navigation.navigate("GoodsCreate"),
+      onPress: () => navigation.navigate("GoodsCreate", {}),
     },
   ]
   const OrderNav = [
