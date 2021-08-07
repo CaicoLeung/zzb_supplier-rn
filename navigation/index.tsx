@@ -17,6 +17,7 @@ import NotFoundScreen from "../screens/NotFoundScreen"
 import { RootStackParamList } from "../types"
 import LinkingConfiguration from "./LinkingConfiguration"
 import GoodsModify from "@/screens/Goods/Modify"
+import CameraModal from "@/screens/Goods/CameraModal"
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -40,6 +41,7 @@ function RootNavigator() {
       <OrderStack.Screen name="GoodsCreate" component={GoodsModify} options={{ title: "添加商品" }} />
       <OrderStack.Screen name="GoodsList" component={GoodsList} options={{ title: "商品管理" }} />
       <OrderStack.Screen name="GoodsDetail" component={GoodsDetail} options={{ title: "商品详情" }} />
+      <OrderStack.Screen name="CameraModal" component={CameraModal} options={{ headerShown: false, headerBackTitle: "返回", title: "拍照", presentation: "modal" }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "404" }} />
     </Stack.Navigator>
   )

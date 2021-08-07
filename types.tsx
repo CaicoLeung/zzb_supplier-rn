@@ -12,8 +12,11 @@ export type RootStackParamList = {
   GoodsList: {
     tab?: SupGoodsTabs
   }
+  CameraModal: undefined
   GoodsDetail: undefined
-  GoodsCreate: undefined
+  GoodsCreate: {
+    uri: string
+  }
   NotFound: undefined
 }
 
