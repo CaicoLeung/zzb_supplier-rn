@@ -1,19 +1,33 @@
-import { Button, Icon, Modal } from "@ant-design/react-native"
+import { Button, Icon } from "@ant-design/react-native"
 import * as React from "react"
 import { Controller, useForm } from "react-hook-form"
-import { Image, ScrollView, StyleSheet, Text, TextInput, View, SafeAreaView, Platform, ImageBackground, Pressable, ActionSheetIOS } from "react-native"
+import { Image, ScrollView, StyleSheet, Modal, Text, TextInput, View, SafeAreaView, Platform, ImageBackground, Pressable, ActionSheetIOS, Dimensions } from "react-native"
 import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler"
 import * as ImagePicker from "expo-image-picker"
 import { Camera } from "expo-camera"
 import { RouteProp, useNavigation, useNavigationState, useRoute } from "@react-navigation/core"
 import { RootStackParamList } from "@/types"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { Picker } from "@react-native-picker/picker"
+import { useBoolean } from "ahooks"
+import { colors, tw } from "react-native-tailwindcss"
+import PickerPopup, { Options } from "@/components/PickerPopup"
+
+const options = [
+  { label: '撒旦撒旦', value: 1 },
+  { label: '定位as', value: 2 },
+  { label: '加油加油和', value: 3 },
+  { label: '吗别点as🙅🏻‍♀️', value: 4 },
+  { label: '欧切卡卡', value: 5 },
+]
 
 const GoodsModify: React.FC = () => {
   const navigator = useNavigation<StackNavigationProp<RootStackParamList, "GoodsCreate">>()
   const route = useRoute<RouteProp<RootStackParamList, "GoodsCreate">>()
+  const [cateModalVisible, cateModal] = useBoolean()
   const [images, setImages] = React.useState<string[]>([])
   const [cameraVisible, setCameraVisible] = React.useState(false)
+  const [selectedCate, setSelectedCate] = React.useState(0)
 
   const {
     control,
@@ -30,7 +44,7 @@ const GoodsModify: React.FC = () => {
   }, [route.params?.uri])
 
   React.useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (Platform.OS !== "web") {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
         if (status !== "granted") {
@@ -76,6 +90,16 @@ const GoodsModify: React.FC = () => {
     )
   }
 
+  const getOptionsLabel = (options: Options<number>[], val: number) => {
+    const findItem = options.find(item => item.value === val)
+    return findItem?.label ?? ''
+  }
+
+  const onConfirm = (val: number) => {
+    setSelectedCate(val)
+    cateModal.setFalse()
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
@@ -111,7 +135,7 @@ const GoodsModify: React.FC = () => {
           defaultValue=""
         />
         <View style={styles.fieldCell}>
-          <Text style={styles.fieldLabel}>商品名称</Text>
+          <Text style={styles.fieldLabel}>商品主图</Text>
           <View style={[styles.fieldValue, { flexDirection: "row", flexWrap: "wrap", flexBasis: 0.9 }]}>
             {images?.map((uri, index) => (
               <ImageBackground style={styles.uploadBox} imageStyle={styles.uploadBox} key={uri} width={95} height={95} source={{ uri }}>
@@ -130,13 +154,22 @@ const GoodsModify: React.FC = () => {
               <Text style={styles.fieldExtra}>{images?.length ?? 0}/5张</Text>
             </View>
           </View>
+          <View style={styles.line}></View>
         </View>
+        <Pressable style={[styles.fieldCell, { justifyContent: "space-between" }]} onPress={cateModal.setTrue}>
+          <Text style={styles.fieldLabel}>商品类目</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={[selectedCate ? tw.textBlack : tw.textGray600]}>{selectedCate ? getOptionsLabel(options, selectedCate) : '请选择'}</Text>
+            <Icon name="right" size="xs" color="#c8c9cc" />
+          </View>
+        </Pressable>
       </ScrollView>
       <View style={styles.footer}>
         <Button type="primary" onPress={handleSubmit(onSubmit)}>
           发布并上架
         </Button>
       </View>
+      <PickerPopup<number> visible={cateModalVisible} onRequestClose={cateModal.setFalse} options={options} onConfirm={onConfirm} />
     </SafeAreaView>
   )
 }
@@ -144,6 +177,9 @@ const GoodsModify: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  placeholder: {
+    color: "#c8c9cc",
   },
   fieldGroupTitle: {
     color: "#969799",
@@ -162,6 +198,7 @@ const styles = StyleSheet.create({
   },
   fieldLabel: {
     paddingTop: 10,
+    paddingBottom: 10,
     paddingRight: 8,
     fontSize: 17,
     color: "#646566",
