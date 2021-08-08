@@ -16,6 +16,7 @@
     "@ant-design/react-native": "^4.2.0",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-picker/picker": "1.9.11",
     "@react-navigation/bottom-tabs": "^6.0.1",
     "@react-navigation/material-top-tabs": "^6.0.1",
     "@react-navigation/native": "^6.0.1",
@@ -46,6 +47,7 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-tab-view": "^3.1.1",
+    "react-native-tailwindcss": "^1.1.11",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.3.0"
   },
