@@ -1,16 +1,14 @@
 import { Button, Icon } from "@ant-design/react-native"
 import * as React from "react"
 import { Controller, useForm } from "react-hook-form"
-import { Image, ScrollView, StyleSheet, Modal, Text, TextInput, View, SafeAreaView, Platform, ImageBackground, Pressable, ActionSheetIOS, Dimensions } from "react-native"
-import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler"
+import { Image, ScrollView, StyleSheet, Modal, Text, TextInput, View, SafeAreaView, Platform, ImageBackground, Pressable, ActionSheetIOS, Dimensions, KeyboardAvoidingView } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import * as ImagePicker from "expo-image-picker"
-import { Camera } from "expo-camera"
 import { RouteProp, useNavigation, useNavigationState, useRoute } from "@react-navigation/core"
 import { RootStackParamList } from "@/types"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { Picker } from "@react-native-picker/picker"
 import { useBoolean } from "ahooks"
-import { colors, tw } from "react-native-tailwindcss"
+import { tw } from "react-native-tailwindcss"
 import PickerPopup, { Options } from "@/components/PickerPopup"
 
 const options = [
@@ -102,74 +100,181 @@ const GoodsModify: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.fieldGroupTitle}>基本信息</Text>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={styles.fieldCell}>
-              <Text style={styles.fieldLabel}>商品名称</Text>
-              <View style={styles.fieldValue}>
-                <TextInput
-                  style={styles.input}
-                  multiline
-                  numberOfLines={3}
-                  placeholder="描述你的商品(不超过100字)"
-                  onBlur={onBlur}
-                  maxLength={100}
-                  onChangeText={onChange}
-                  value={value}
-                />
-                <View style={styles.fieldFooter}>
-                  <Text style={styles.fieldErrorMsg}>{errors.firstName && "商品名称是必填项!"}</Text>
-                  <Text style={styles.fieldExtra}>{value.length}/100</Text>
+      <KeyboardAvoidingView keyboardVerticalOffset={30} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={tw.flex1}>
+        <ScrollView style={[tw.flex1]}>
+          <Text style={styles.fieldGroupTitle}>基本信息</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={styles.fieldCell}>
+                <Text style={styles.fieldLabel}>商品名称</Text>
+                <View style={styles.fieldValue}>
+                  <TextInput
+                    style={styles.input}
+                    multiline
+                    numberOfLines={3}
+                    placeholder="描述你的商品(不超过100字)"
+                    onBlur={onBlur}
+                    maxLength={100}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  <View style={styles.fieldFooter}>
+                    <Text style={styles.fieldErrorMsg}>{errors.firstName && "商品名称是必填项!"}</Text>
+                    <Text style={styles.fieldExtra}>{value.length}/100</Text>
+                  </View>
                 </View>
+                <View style={ styles.line }/>
               </View>
-              <View style={styles.line}></View>
-            </View>
-          )}
-          name="firstName"
-          defaultValue=""
-        />
-        <View style={styles.fieldCell}>
-          <Text style={styles.fieldLabel}>商品主图</Text>
-          <View style={[styles.fieldValue, { flexDirection: "row", flexWrap: "wrap", flexBasis: 0.9 }]}>
-            {images?.map((uri, index) => (
-              <ImageBackground style={styles.uploadBox} imageStyle={styles.uploadBox} key={uri} width={95} height={95} source={{ uri }}>
-                <Pressable style={styles.uploadBoxDel}>
-                  <Icon name="delete" color="red" size="md" onPress={() => removeImageHandle(index)} />
-                </Pressable>
-              </ImageBackground>
-            ))}
-            {images.length < 5 && (
-              <TouchableOpacity style={styles.uploadBox} onPress={imagePickerHandler}>
-                <Icon name="camera" size="lg" />
-              </TouchableOpacity>
             )}
-            <View style={styles.fieldFooter}>
-              <Text style={styles.fieldErrorMsg}>{images?.length ? "" : "请选择商品主图!"}</Text>
-              <Text style={styles.fieldExtra}>{images?.length ?? 0}/5张</Text>
+            name="firstName"
+            defaultValue=""
+          />
+          <View style={styles.fieldCell}>
+            <Text style={styles.fieldLabel}>商品主图</Text>
+            <View style={[styles.fieldValue, { flexDirection: "row", flexWrap: "wrap", flexBasis: 0.9 }]}>
+              {images?.map((uri, index) => (
+                <ImageBackground style={styles.uploadBox} imageStyle={styles.uploadBox} key={uri} width={95} height={95} source={{ uri }}>
+                  <Pressable style={styles.uploadBoxDel}>
+                    <Icon name="delete" color="red" size="md" onPress={() => removeImageHandle(index)} />
+                  </Pressable>
+                </ImageBackground>
+              ))}
+              {images.length < 5 && (
+                <TouchableOpacity style={styles.uploadBox} onPress={imagePickerHandler}>
+                  <Icon name="camera" size="lg" />
+                </TouchableOpacity>
+              )}
+              <View style={styles.fieldFooter}>
+                <Text style={styles.fieldErrorMsg}>{images?.length ? "" : "请选择商品主图!"}</Text>
+                <Text style={styles.fieldExtra}>{images?.length ?? 0}/5张</Text>
+              </View>
             </View>
+            <View style={ styles.line }/>
           </View>
-          <View style={styles.line}></View>
+          <TouchableOpacity style={[styles.fieldCell, { justifyContent: "space-between" }]} onPress={cateModal.setTrue}>
+            <Text style={styles.fieldLabel}>商品类目</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={[selectedCate ? tw.textBlack : tw.textGray600]}>{selectedCate ? getOptionsLabel(options, selectedCate) : '请选择'}</Text>
+              <Icon name="right" size="xs" color="#c8c9cc" />
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.fieldGroupTitle}>库存信息</Text>
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={styles.fieldCell}>
+                <Text style={styles.fieldLabel}>商品重量(g)</Text>
+                <View style={styles.fieldValue}>
+                  <TextInput
+                    keyboardType="number-pad"
+                    style={styles.input}
+                    placeholder="请输入"
+                    onBlur={onBlur}
+                    maxLength={10}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  <View style={styles.fieldFooter}>
+                    {errors.weight && <Text style={styles.fieldErrorMsg}>商品重量是必填项</Text>}
+                  </View>
+                </View>
+                <View style={styles.line}/>
+              </View>
+            )}
+            name="weight"
+            defaultValue=""
+          />
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={styles.fieldCell}>
+                <Text style={styles.fieldLabel}>加工费(元/g)</Text>
+                <View style={styles.fieldValue}>
+                  <TextInput
+                    keyboardType="number-pad"
+                    style={styles.input}
+                    placeholder="请输入"
+                    onBlur={onBlur}
+                    maxLength={10}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  <View style={styles.fieldFooter}>
+                    {errors.process && <Text style={styles.fieldErrorMsg}>加工费是必填项</Text>}
+                  </View>
+                </View>
+                <View style={styles.line}/>
+              </View>
+            )}
+            name="process"
+            defaultValue=""
+          />
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={styles.fieldCell}>
+                <Text style={styles.fieldLabel}>供货价(元)</Text>
+                <View style={styles.fieldValue}>
+                  <TextInput
+                    keyboardType="number-pad"
+                    style={styles.input}
+                    placeholder="请输入"
+                    onBlur={onBlur}
+                    maxLength={10}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  <View style={styles.fieldFooter}>
+                    {errors.price_cost && <Text style={styles.fieldErrorMsg}>现货库存是必填项</Text>}
+                  </View>
+                </View>
+                <View style={styles.line}/>
+              </View>
+            )}
+            name="price_cost"
+            defaultValue=""
+          />
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View style={styles.fieldCell}>
+                <Text style={styles.fieldLabel}>现货库存(件)</Text>
+                <View style={styles.fieldValue}>
+                  <TextInput
+                    keyboardType="number-pad"
+                    style={styles.input}
+                    placeholder="请输入"
+                    onBlur={onBlur}
+                    maxLength={10}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  <View style={styles.fieldFooter}>
+                    {errors.stock && <Text style={styles.fieldErrorMsg}>现货库存是必填项</Text>}
+                  </View>
+                </View>
+                <View style={styles.line}/>
+              </View>
+            )}
+            name="stock"
+            defaultValue=""
+          />
+        </ScrollView>
+        <View style={styles.footer}>
+          <Button type="primary" onPress={handleSubmit(onSubmit)}>
+            发布并上架
+          </Button>
         </View>
-        <Pressable style={[styles.fieldCell, { justifyContent: "space-between" }]} onPress={cateModal.setTrue}>
-          <Text style={styles.fieldLabel}>商品类目</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={[selectedCate ? tw.textBlack : tw.textGray600]}>{selectedCate ? getOptionsLabel(options, selectedCate) : '请选择'}</Text>
-            <Icon name="right" size="xs" color="#c8c9cc" />
-          </View>
-        </Pressable>
-      </ScrollView>
-      <View style={styles.footer}>
-        <Button type="primary" onPress={handleSubmit(onSubmit)}>
-          发布并上架
-        </Button>
-      </View>
-      <PickerPopup<number> visible={cateModalVisible} onRequestClose={cateModal.setFalse} options={options} onConfirm={onConfirm} />
+        <PickerPopup<number> visible={cateModalVisible} onRequestClose={cateModal.setFalse} options={options} onConfirm={onConfirm} />
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
@@ -197,6 +302,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   fieldLabel: {
+    width: 100,
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 8,
@@ -255,8 +361,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
   footer: {
-    paddingHorizontal: 12,
+    // paddingTop: 50,
     paddingVertical: 8,
+    paddingHorizontal: 12,
   },
 })
 
