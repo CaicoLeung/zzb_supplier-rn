@@ -113,7 +113,7 @@ const GoodsModify: React.FC = () => {
                 <Text style={styles.fieldLabel}>商品名称</Text>
                 <View style={styles.fieldValue}>
                   <TextInput
-                    style={styles.input}
+                    style={[styles.input, tw.textLeft]}
                     multiline
                     numberOfLines={3}
                     placeholder="描述你的商品(不超过100字)"
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   fieldLabel: {
-    width: 100,
+    width: 120,
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 8,
@@ -345,10 +345,11 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingTop: 10,
-    paddingBottom: 10,
+    // paddingBottom: 10,
     fontSize: 17,
     color: "#323233",
     paddingHorizontal: 8,
+    textAlign: 'right',
     textAlignVertical: "top",
   },
   line: {
