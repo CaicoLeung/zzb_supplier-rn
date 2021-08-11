@@ -1,8 +1,7 @@
-import React from "react";
-import { View } from "@/components/Themed"
-import { ScrollView, StyleSheet, Text } from "react-native";
+import React from "react"
+import {ScrollView, StyleSheet, Text} from "react-native"
 
-export default function OrderList() {
+export default function GoodsList() {
   return (
     <ScrollView style={styles.container}>
       <Text>订单列表</Text>
@@ -12,6 +11,6 @@ export default function OrderList() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 })

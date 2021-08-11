@@ -1,18 +1,28 @@
-import React from "react"
-import { View } from "@/components/Themed"
-import { Dimensions, FlatList, ListRenderItemInfo, Modal, RefreshControl, SafeAreaView, StyleProp, StyleSheet, Text, ViewStyle } from "react-native"
-import { SearchBar } from "@ant-design/react-native"
-import { ShelfSupGoodsTab, SupGoodsTabs } from "@/helpers/goods"
-import { Goods } from "@/types/goods"
-import { GoodsCart } from "@/components/GoodsCart"
-import { Upload } from "@/types/upload"
+import React, {useMemo} from "react"
+import {View} from "@/components/Themed"
+import {
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  Modal,
+  RefreshControl,
+  SafeAreaView,
+  StyleProp,
+  StyleSheet,
+  Text,
+  ViewStyle
+} from "react-native"
+import {SearchBar} from "@ant-design/react-native"
+import {ShelfSupGoodsTab, SupGoodsTabs} from "@/helpers/goods"
+import {Goods} from "@/types/goods"
+import {GoodsCart} from "@/components/GoodsCart"
+import {Upload} from "@/types/upload"
 import ImageViewer from "react-native-image-zoom-viewer"
-import { IImageInfo } from "react-native-image-zoom-viewer/built/image-viewer.type"
-import { getSupGoodsList } from "@/services/goods"
-import { createMaterialTopTabNavigator, MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs"
-import { useRequest } from "ahooks"
-import { useMemo } from "react"
-import { RouteProp, useNavigationState, useRoute } from "@react-navigation/core"
+import {IImageInfo} from "react-native-image-zoom-viewer/built/image-viewer.type"
+import {getSupGoodsList} from "@/services/goods"
+import {createMaterialTopTabNavigator, MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs"
+import {useRequest} from "ahooks"
+import {RouteProp, useNavigationState, useRoute} from "@react-navigation/core"
 
 interface ListViewProps {
   type: SupGoodsTabs
@@ -192,7 +202,7 @@ type Props = {
   navigation: ProfileScreenNavigationProp
 }
 
-export default function GoodsList({ navigation }: Props) {
+export default function List({ navigation }: Props) {
   const sellingListViewRef = React.useRef<ListViewRefType>(null)
   const removedListViewRef = React.useRef<ListViewRefType>(null)
   const [activeTab, setActiveTab] = React.useState<SupGoodsTabs>(SupGoodsTabs.售卖中)

@@ -1,12 +1,11 @@
 import * as React from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground, Pressable, TouchableHighlight } from "react-native"
-import { Button, Card, Icon } from "@ant-design/react-native"
-import { TextInput } from "react-native-gesture-handler"
-import { RootStackParamList } from "types"
-import { StackNavigationProp } from "@react-navigation/stack"
+import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from "react-native"
+import {Button, Card, Icon} from "@ant-design/react-native"
+import {RootStackParamList} from "types"
+import {StackNavigationProp} from "@react-navigation/stack"
 import styled from "styled-components/native"
-import { SupGoodsTabs } from "@/helpers/goods"
-import { useNavigation } from "@react-navigation/native"
+import {SupGoodsTabs} from "@/helpers/goods"
+import {useNavigation} from "@react-navigation/native"
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Root">
 
@@ -21,22 +20,22 @@ const HeaderView = styled.View`
   flex: 1;
 `
 const ImageBackgroundBox = styled.ImageBackground`
-  padding-top: 70;
-  padding-bottom: 30;
+  padding-top: 70px;
+  padding-bottom: 30px;
 `
 const ImageBackgroundInner = styled.View`
   flex: 1;
-  height: 70;
-  padding-left: 20;
-  padding-right: 20;
+  height: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
   align-items: center;
   flex-direction: row;
 `
 const AvatarBox = styled.Image`
-  width: 60;
-  height: 60;
-  border-radius: 30;
-  margin-right: 10;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  margin-right: 10px;
 `
 const AccountInfoBox = styled.View`
   flex: 1;
@@ -46,12 +45,12 @@ const AccountInfoBox = styled.View`
 `
 const BaseText = styled.Text`
   color: #ffffff;
-  font-size: 14;
+  font-size: 14px;
   font-weight: 300;
 `
 const TitleText = styled(BaseText)`
-  font-size: 20;
-  margin-bottom: 8;
+  font-size: 20px;
+  margin-bottom: 8px;
   font-weight: 600;
 `
 
@@ -71,7 +70,7 @@ export default function TabOneScreen() {
     {
       title: "＋",
       name: "添加商品",
-      onPress: () => navigation.navigate("GoodsCreate", {}),
+      onPress: () => navigation.navigate("GoodsCreate", {uri: ''}),
     },
   ]
   const OrderNav = [
@@ -118,7 +117,7 @@ export default function TabOneScreen() {
       <TouchableHighlight style={[styles.card, { marginTop: 10 }]} onPress={() => navigation.navigate("OrderList")}>
         <Card>
           <Card.Header style={styles.cardHeader} title="订单管理" extra={<Icon style={{ textAlign: "right" }} name="right" size="sm" />} />
-          <Card.Body style={{ flexDirection: "row" }}>
+          <Card.Body style={{flexDirection: "row"}}>
             {OrderNav.map((nav, index) => (
               <View style={[styles.cardBodyItem, { borderRightWidth: index === OrderNav.length - 1 ? 0 : 0.4 }]} key={nav.name}>
                 <Text style={[styles.textCenter, { fontSize: 20 }]}>{nav.title}</Text>
