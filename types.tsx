@@ -7,6 +7,7 @@ import type { SupGoodsTabs } from "./helpers/goods"
 
 export type RootStackParamList = {
   Root: undefined
+  Login: undefined
   OrderList: undefined
   OrderDetail: undefined
   GoodsList: {

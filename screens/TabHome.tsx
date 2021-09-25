@@ -97,7 +97,7 @@ export default function TabOneScreen() {
               <TitleText>余额宝文化</TitleText>
               <BaseText>账号: 666666</BaseText>
             </AccountInfoBox>
-            <Button size="small">退出登录</Button>
+            <Button size="small" onPress={() => navigation.navigate("Login")}>退出登录</Button>
           </ImageBackgroundInner>
         </ImageBackgroundBox>
       </HeaderView>

@@ -18,6 +18,7 @@ import { RootStackParamList } from "../types"
 import LinkingConfiguration from "./LinkingConfiguration"
 import GoodsModify from "@/screens/Goods/Modify"
 import CameraModal from "@/screens/Goods/CameraModal"
+import LoginPage from "@/screens/Login";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,6 +37,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={TabHome} options={{ title: "工作台" }} />
+      <Stack.Screen name="Login" component={LoginPage} options={{ title: "登录", headerShown: false }} />
       <OrderStack.Screen name="OrderList" component={OrderList} options={{ title: "订单管理" }} />
       <OrderStack.Screen name="OrderDetail" component={OrderDetail} options={{ title: "订单详情" }} />
       <OrderStack.Screen name="GoodsCreate" component={GoodsModify} options={{ title: "添加商品" }} />
